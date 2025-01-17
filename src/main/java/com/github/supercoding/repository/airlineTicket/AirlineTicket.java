@@ -12,8 +12,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "ticketId")
 @Entity
+@Builder
 @Table(name = "airline_ticket")
 public class AirlineTicket {
     @Id @Column(name = "ticket_id")

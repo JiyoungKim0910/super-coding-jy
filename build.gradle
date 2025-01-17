@@ -24,20 +24,28 @@ repositories {
 }
 
 dependencies {
+    //JDBC
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     runtimeOnly 'com.mysql:mysql-connector-j'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //Lombok
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
+    // Test Lombok
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'com.h2database:h2'
+    //Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     //MapStruct
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     //swagger
-//    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-//    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    //implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    //implementation 'io.springfox:springfox-swagger2:2.9.2' 해당 Spring 버전에선 지원 안됨
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
     //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

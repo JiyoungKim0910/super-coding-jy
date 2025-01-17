@@ -1,0 +1,13 @@
+server:
+  port: 8090
+spring:
+  datasource: # 여러개의 DB를 호출해야할 경우 yaml으로 정의는 어려움, Bean으로 사용
+    url: jdbc:mysql://localhost:3306/chapter_97
+    username: root
+    password: 12341234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+logging:
+  config: classpath:logback-spring-local.xml

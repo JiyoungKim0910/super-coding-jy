@@ -12,7 +12,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "pamentId")
+@EqualsAndHashCode(of = "paymentId")
 @Entity
 @Table(name = "payment")
 public class Payment {

@@ -6,11 +6,13 @@ import com.github.supercoding.repository.airlineTicket.AirlineTicket;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Ticket {
     private String depart;

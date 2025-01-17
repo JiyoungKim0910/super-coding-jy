@@ -15,6 +15,7 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "users")
+@Builder
 public class UserEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
