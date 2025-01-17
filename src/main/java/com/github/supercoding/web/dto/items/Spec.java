@@ -1,4 +1,4 @@
-package com.github.supercoding.web.dto;
+package com.github.supercoding.web.dto.items;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

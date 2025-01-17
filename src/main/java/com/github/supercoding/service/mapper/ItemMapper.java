@@ -1,8 +1,8 @@
 package com.github.supercoding.service.mapper;
 
 import com.github.supercoding.repository.Items.ItemEntity;
-import com.github.supercoding.web.dto.Item;
-import com.github.supercoding.web.dto.ItemBody;
+import com.github.supercoding.web.dto.items.Item;
+import com.github.supercoding.web.dto.items.ItemBody;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

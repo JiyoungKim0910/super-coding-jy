@@ -1,17 +1,16 @@
 package com.github.supercoding.service;
 
 import com.github.supercoding.repository.Items.ElectronicStoreItemJpaRepository;
-import com.github.supercoding.repository.Items.ElectronicStoreItemRepository;
 import com.github.supercoding.repository.Items.ItemEntity;
 import com.github.supercoding.repository.storeSales.StoreSales;
 import com.github.supercoding.repository.storeSales.StoreSalesJpaRepository;
-import com.github.supercoding.repository.storeSales.StoreSalesRepository;
 import com.github.supercoding.service.exceptions.NotAcceptException;
 import com.github.supercoding.service.exceptions.NotFoundException;
 import com.github.supercoding.service.mapper.ItemMapper;
-import com.github.supercoding.web.dto.BuyOrder;
-import com.github.supercoding.web.dto.Item;
-import com.github.supercoding.web.dto.ItemBody;
+import com.github.supercoding.web.dto.items.BuyOrder;
+import com.github.supercoding.web.dto.items.Item;
+import com.github.supercoding.web.dto.items.ItemBody;
+import com.github.supercoding.web.dto.items.StoreInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,8 +25,8 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class ElectronicStoreItemService {
-    private final ElectronicStoreItemRepository electronicStoreItemRepository;
-    private final StoreSalesRepository storeSalesRepository;
+    //private final ElectronicStoreItemRepository electronicStoreItemRepository;
+    //private final StoreSalesRepository storeSalesRepository;
 
     private final ElectronicStoreItemJpaRepository electronicStoreItemJpaRepository;
     private final StoreSalesJpaRepository storeSalesJpaRepository;
@@ -148,5 +147,14 @@ public class ElectronicStoreItemService {
     public Page<Item> findAllWithPageable2(List<String> types, Pageable pageable) {
         Page<ItemEntity> itemEntities = electronicStoreItemJpaRepository.findAllByTypeIn(types, pageable);
         return itemEntities.map(ItemMapper.INSTANCE::itemEntityToItem);
+    }
+
+    @Transactional(transactionManager = "tmJpa1")
+    public List<StoreInfo> findAllStoreInfo() {
+        List<StoreSales> storeSales = storeSalesJpaRepository.findAllFetchJoin();
+        //N+1문제 발생
+        log.info("=================================N + 1 확인 용 로그 ===========================");
+        List<StoreInfo> storeInfos = storeSales.stream().map(StoreInfo::new).collect(Collectors.toList());
+        return storeInfos;
     }
 }

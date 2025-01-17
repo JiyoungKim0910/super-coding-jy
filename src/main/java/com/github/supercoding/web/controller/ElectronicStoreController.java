@@ -1,9 +1,10 @@
 package com.github.supercoding.web.controller;
 
 import com.github.supercoding.service.ElectronicStoreItemService;
-import com.github.supercoding.web.dto.BuyOrder;
-import com.github.supercoding.web.dto.Item;
-import com.github.supercoding.web.dto.ItemBody;
+import com.github.supercoding.web.dto.items.BuyOrder;
+import com.github.supercoding.web.dto.items.Item;
+import com.github.supercoding.web.dto.items.ItemBody;
+import com.github.supercoding.web.dto.items.StoreInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -109,5 +108,11 @@ public class ElectronicStoreController {
     @GetMapping("/items-types-page")
     public Page<Item> findItemsPagination(@RequestParam("type") List<String> types, Pageable pageable){
         return electronicStoreItemService.findAllWithPageable2(types, pageable);
+    }
+
+    @Operation(summary = "전체 stores 정보검색")
+    @GetMapping("/stores")
+    public List<StoreInfo> findAllStoreInfo(){
+        return electronicStoreItemService.findAllStoreInfo();
     }
 }

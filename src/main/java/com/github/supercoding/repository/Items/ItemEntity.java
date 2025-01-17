@@ -1,11 +1,10 @@
 package com.github.supercoding.repository.Items;
 
 import com.github.supercoding.repository.storeSales.StoreSales;
-import com.github.supercoding.web.dto.ItemBody;
+import com.github.supercoding.web.dto.items.ItemBody;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Getter

@@ -1,6 +1,7 @@
 package com.github.supercoding.repository.reservations;
 
 import com.github.supercoding.repository.airlineTicket.AirlineTicket;
+import com.github.supercoding.repository.flight.Flight;
 import com.github.supercoding.repository.passenger.Passenger;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +21,7 @@ public class Reservation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Integer reservationId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;

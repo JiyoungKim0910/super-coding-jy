@@ -40,13 +40,23 @@ public class AirReservationController {
 
         ReservationResult reservationResult = airReservationService.makeReservation(reservationRequest);
         return reservationResult;
-
-
     }
+    @Operation(summary = "Reservation 결제")
     @PostMapping("/payments")
     public String makePayment(@RequestBody PaymentRequest paymentRequest){
         return airReservationService.makePayment(paymentRequest);
 
     }
+
+    @Operation(summary = "userId의 예약한 항공편과 수수료 병합")
+    @GetMapping("/users-sum-price")
+    public Double findUserFlightSumPrice(
+            @Parameter(name = "user-id", description = "유저ID",example = "1")
+            @RequestParam("user-id") Integer userId
+    ){
+        Double sum = airReservationService.findUserFlightSumPrice(userId);
+        return sum;
+    }
+
 
 }

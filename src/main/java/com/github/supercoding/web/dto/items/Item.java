@@ -1,15 +1,22 @@
-package com.github.supercoding.web.dto;
+package com.github.supercoding.web.dto.items;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
+@Setter
 @NoArgsConstructor
-public class ItemBody {
+@ToString
+public class Item {
+    @Schema(name = "id", description = "Item ID", example = "1") private String id;
     @Schema(name = "name", description = "Item 이름", example = "Dell XPS 15") private String name;
     @Schema(name = "type", description = "Item 종류", example = "Laptop") private String type;
     @Schema(name = "price", description = "Item 가격", example = "125000") private Integer price;
     private Spec spec;
+
+
 
 }

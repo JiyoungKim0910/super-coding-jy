@@ -1,11 +1,13 @@
 package com.github.supercoding.repository.airlineTicket;
 
+import com.github.supercoding.repository.flight.Flight;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 public class AirlineTicket {
     @Id @Column(name = "ticket_id")
     private Integer ticketId;
-    @Column(name = "ticket_type", length = 5, columnDefinition = "")
+    @Column(name = "ticket_type", length = 5)
     private String ticketType;
     @Column(name = "departure_loc",length = 20)
     private String departureLocation;
@@ -30,6 +32,9 @@ public class AirlineTicket {
     private  Double tax;
     @Column(name = "total_price")
     private  Double totalPrice;
+    //  FK 양방향으로 임의 지정
+    @OneToMany(mappedBy = "airlineTicket" )
+    private List<Flight> flightList;
 
     public AirlineTicket(Integer ticketId, String ticketType, String departureLocation, String arrivalLocation, Timestamp departureAt, Timestamp returnAt, Double tax, Double totalPrice) {
         this.ticketId = ticketId;

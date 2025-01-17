@@ -1,61 +1,38 @@
 package com.github.supercoding.repository.payment;
 
+import com.github.supercoding.repository.passenger.Passenger;
+import com.github.supercoding.repository.reservations.Reservation;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "pamentId")
+@Entity
+@Table(name = "payment")
 public class Payment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "payment_id")
     private Integer paymentId;
-    private Integer passengerId;
-    private Integer reservationId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "passenger_id")
+    private Passenger passenger;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
+    @Column(name = "pay_at")
     private LocalDateTime payAt;
 
-    public Payment(Integer reservationId, Integer passengerId) {
-        this.passengerId = passengerId;
-        this.reservationId = reservationId;
+    public Payment(Reservation reservation, Passenger passenger) {
+        this.passenger = passenger;
+        this.reservation = reservation;
         this.payAt = LocalDateTime.now();
     }
 
-    public Integer getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(Integer paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public Integer getPassengerId() {
-        return passengerId;
-    }
-
-    public void setPassengerId(Integer passengerId) {
-        this.passengerId = passengerId;
-    }
-
-    public Integer getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(Integer reservationId) {
-        this.reservationId = reservationId;
-    }
-
-    public LocalDateTime getPayAt() {
-        return payAt;
-    }
-
-    public void setPayAt(LocalDateTime payAt) {
-        this.payAt = payAt;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Payment)) return false;
-        Payment payment = (Payment) o;
-        return Objects.equals(paymentId, payment.paymentId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(paymentId);
-    }
 }
