@@ -41,12 +41,5 @@ public class Reservation {
         this.reservationStatus = "대기";
         this.reserveAt = LocalDateTime.now();
     }
-    public Reservation(Integer reservationId, Passenger passenger, AirlineTicket airlineTicket, String reservationStatus, Date reserveAt) {
-        this.reservationId = reservationId;
-        this.passenger = passenger;
-        this.airlineTicket = airlineTicket;
-        this.reservationStatus = reservationStatus;
-        this.reserveAt = reserveAt.toLocalDate().atStartOfDay();
-    }
 
 }

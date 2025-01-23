@@ -33,9 +33,9 @@ public class ElectronicStoreController {
     @Operation(summary = "모든 Items를 검색하는 API ")
     @GetMapping("/items")
     public List<Item> findAllItem(){
-        logger.info("GET /items 요청이 들어왔습니다.");
+        //logger.info("GET /items 요청이 들어왔습니다.");
         List<Item> items = electronicStoreItemService.findAllItems();
-        logger.info("Get /items 응답: "+items);
+        //logger.info("Get /items 응답: "+items);
         return items;
 
     }
@@ -59,9 +59,9 @@ public class ElectronicStoreController {
 
     @GetMapping("/items-queries")
     public List<Item> findItemsByQueryIds(@RequestParam("id") List<String> ids){
-        logger.info("/items-queries 요청 ids: "+ ids);
+        //logger.info("/items-queries 요청 ids: "+ ids);
         List<Item> items = electronicStoreItemService.findItemsByIds(ids);
-        logger.info("/items-queries 응답 : "+ items);
+        //logger.info("/items-queries 응답 : "+ items);
         return electronicStoreItemService.findItemsByIds(ids);
     }
 
@@ -85,9 +85,9 @@ public class ElectronicStoreController {
     public List<Item> findItemsByTypes(
             @Parameter(name = "Type",description = "items type", example = "phone")
             @RequestParam("type") List<String> types){
-        log.info("/items-types 요청 type: "+ types);
+        //log.info("/items-types 요청 type: "+ types);
         List<Item> items = electronicStoreItemService.findItemsByTypes(types);
-        logger.info("/items-types 응답 : "+ items);
+        //logger.info("/items-types 응답 : "+ items);
         return items;
     }
     @Operation(summary = "여러 Item prices 검색(쿼리문)")

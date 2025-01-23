@@ -13,23 +13,20 @@ import com.github.supercoding.repository.passenger.PassengerRepository;
 import com.github.supercoding.repository.payment.Payment;
 import com.github.supercoding.repository.payment.PaymentJpaRepository;
 import com.github.supercoding.repository.payment.PaymentRepository;
-import com.github.supercoding.repository.reservations.FlightPriceAndCharge;
-import com.github.supercoding.repository.reservations.Reservation;
-import com.github.supercoding.repository.reservations.ReservationJpaRepository;
-import com.github.supercoding.repository.reservations.ReservationRepository;
+import com.github.supercoding.repository.reservations.*;
 import com.github.supercoding.repository.users.UserEntity;
 import com.github.supercoding.repository.users.UserJpaRepository;
 import com.github.supercoding.repository.users.UserRepository;
 import com.github.supercoding.service.exceptions.InvalidValueException;
 import com.github.supercoding.service.exceptions.NotAcceptException;
 import com.github.supercoding.service.exceptions.NotFoundException;
+import com.github.supercoding.service.mapper.FlightMapper;
 import com.github.supercoding.service.mapper.TicketMapper;
-import com.github.supercoding.web.dto.airline.PaymentRequest;
-import com.github.supercoding.web.dto.airline.ReservationRequest;
-import com.github.supercoding.web.dto.airline.ReservationResult;
-import com.github.supercoding.web.dto.airline.Ticket;
+import com.github.supercoding.web.dto.airline.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -190,5 +187,14 @@ public class AirReservationService {
         Double chargeSum = flightPriceAndCharges.stream().mapToDouble(FlightPriceAndCharge::getCharge).sum();
         //3. 두개의 합을 다시 더하고 return
         return flightSum + chargeSum ;
+    }
+
+    public Page<FlightInfo> findAllFlightInfoByTicketType(String ticketType, Pageable pageable) {
+        Page<Flight> flights = flightJpaRepository.findAllByAirlineTicket_TicketType(ticketType,pageable);
+        return flights.map(FlightMapper.INSTANCE::flightToFlightInfo);
+    }
+
+    public List<String> findReservedFlightArrivalLocation(String userName) {
+        return reservationJpaRepository.findReservedArrivalLocations(userName);
     }
 }

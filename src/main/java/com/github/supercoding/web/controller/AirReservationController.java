@@ -1,17 +1,18 @@
 package com.github.supercoding.web.controller;
 
+import com.github.supercoding.repository.userDetails.CustomUserDetails;
 import com.github.supercoding.service.AirReservationService;
-import com.github.supercoding.service.exceptions.InvalidValueException;
-import com.github.supercoding.service.exceptions.NotAcceptException;
-import com.github.supercoding.service.exceptions.NotFoundException;
 import com.github.supercoding.web.dto.airline.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -27,8 +28,11 @@ public class AirReservationController {
     @GetMapping("tickets")
     @ResponseStatus(HttpStatus.OK)
     public TicketResponse findAirPlaneTickets (
-            @Parameter(name = "user-Id", description = "유저 ID", example = "1") @RequestParam("user-Id")Integer userId,
+            //@Parameter(name = "user-Id", description = "유저 ID", example = "1") @RequestParam("user-Id")Integer userId,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Parameter(name = "airline-ticket-type", description = "항공권 타입", example = "왕복|편도") @RequestParam("airline-ticket-type")String ticketType){
+
+        Integer userId = customUserDetails.getUserId();
         List<Ticket> tickets = airReservationService.findUserFavoritePlaceTickets(userId, ticketType);
         return new TicketResponse(tickets);
 
@@ -56,6 +60,24 @@ public class AirReservationController {
     ){
         Double sum = airReservationService.findUserFlightSumPrice(userId);
         return sum;
+    }
+
+    @Operation(summary = "항공권의 왕복|편도에 따라 달라지는 Pageable하게 반환하는 API")
+    @GetMapping("/flight-pageable")
+    public Page<FlightInfo> findAllFlightInfo(
+            @Parameter(name = "type",description = "항공권 Type", example = "왕복")
+            @RequestParam("type") String ticketType, Pageable pageable
+    ){
+        return airReservationService.findAllFlightInfoByTicketType(ticketType,pageable);
+    }
+
+    @Operation(summary = "유저의 예약한 항공편들의 목적지")
+    @GetMapping("/username-arrival-location")
+    public List<String> findUserReservedFlightsArrivalLocation(
+            @Parameter(name = "username", description = "유저 이름", example = "김영희")
+            @RequestParam("username") String userName
+    ){
+        return airReservationService.findReservedFlightArrivalLocation(userName);
     }
 
 
