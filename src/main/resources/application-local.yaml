@@ -6,4 +6,5 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
+
 #  리소스 하위 경로가 classpath

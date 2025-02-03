@@ -5,8 +5,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,9 +24,16 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
+    @Value("${jwt.secret-key-source}")
+    private String secretKeySource ;
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final String secretKey = Base64.getEncoder()
-            .encodeToString(key.getEncoded());//"super-coding".getBytes()); //입력한 텍스트가 너무 짧아서 에러 // 실제 구현 시 다르게
+    private String secretKey;
+    @PostConstruct
+    public void init() {
+        secretKey = Base64.getEncoder()
+                .encodeToString(key.getEncoded());//"super-coding".getBytes()); //입력한 텍스트가 너무 짧아서 에러 // 실제 구현 시 다르게
+
+    }
     private long tokenValidMillisecond = 1000L * 60 *60; //토큰의 유효 시간 1시간
     private final UserDetailsService userDetailsService; // CustomUserDetailsService
 
