@@ -34,7 +34,7 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/resources/static/**","v1/api/sign/*").permitAll()
-                        .requestMatchers("/v1/api/air-reservation/*").hasRole("USER"))
+                        .requestMatchers("v1/api/air-reservation/*").hasRole("USER"))
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                         .accessDeniedHandler(new CustomAccessDeniedHandler()))

@@ -25,7 +25,7 @@ public class AirReservationController {
 
 
     @Operation(summary = "선호하는 Ticket 탐색")
-    @GetMapping("tickets")
+    @GetMapping("/tickets")
     @ResponseStatus(HttpStatus.OK)
     public TicketResponse findAirPlaneTickets (
             //@Parameter(name = "user-Id", description = "유저 ID", example = "1") @RequestParam("user-Id")Integer userId,
@@ -39,7 +39,7 @@ public class AirReservationController {
     }
     @Operation(summary = "User와 Ticket ID로 예약 진행")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("reservations")
+    @PostMapping("/reservations")
     public ReservationResult makeReservation (@RequestBody ReservationRequest reservationRequest){
 
         ReservationResult reservationResult = airReservationService.makeReservation(reservationRequest);

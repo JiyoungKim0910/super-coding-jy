@@ -27,6 +27,7 @@ dependencies {
     //JDBC
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly  'org.mariadb.jdbc:mariadb-java-client'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     //Lombok
     compileOnly 'org.projectlombok:lombok'
@@ -61,7 +62,6 @@ dependencies {
 
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
 
@@ -71,4 +71,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('bootJar'){
+    mainClass = 'com.github.supercoding.SuperCodingApplication'
 }
