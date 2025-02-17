@@ -24,8 +24,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-    @Value("${jwt.secret-key-source}")
-    private String secretKeySource ;
+//    @Value("${jwt.secret-key-source}")
+//    private String secretKeySource ;
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private String secretKey;
     @PostConstruct
